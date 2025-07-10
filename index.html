@@ -302,6 +302,139 @@
             border-color: #25d366;
             background: #f0fdf4;
         }
+        
+        /* Estilos para vista móvil */
+        .mobile-preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .mobile-phone {
+            width: 320px;
+            height: 640px;
+            background: #000;
+            border-radius: 30px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .whatsapp-header {
+            background: #075e54;
+            padding: 15px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .group-avatar {
+            width: 40px;
+            height: 40px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .group-info h4 {
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .group-info p {
+            margin: 0;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .chat-area {
+            flex: 1;
+            padding: 20px 15px;
+            background: #e5ddd5;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="whatsapp-bg" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23d9d9d9" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23whatsapp-bg)"/></svg>');
+            position: relative;
+            overflow-y: auto;
+        }
+        
+        .message-bubble {
+            background: #dcf8c6;
+            border-radius: 18px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            max-width: 85%;
+            margin-left: auto;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message-bubble::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-left: 15px solid #dcf8c6;
+            border-bottom: 15px solid transparent;
+        }
+        
+        .message-text {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #303030;
+            word-wrap: break-word;
+        }
+        
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 3px;
+        }
+        
+        .message-status {
+            color: #25d366;
+            font-size: 16px;
+        }
+        
+        .close-preview {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
     </style>
 </head>
 <body>
@@ -413,6 +546,7 @@
                 </div>
                 
                 <button class="btn btn-primary" onclick="previewMessage()">👁️ Vista Previa</button>
+                <button class="btn btn-primary" onclick="showMobilePreview()">📱 Vista Móvil</button>
                 <button class="btn btn-secondary" onclick="saveTemplate()">💾 Guardar Plantilla</button>
                 
                 <div id="message-preview" class="status-panel hidden">
@@ -688,7 +822,7 @@
             }
         }
         
-        // Vista previa del mensaje
+        // Vista previa del mensaje (versión simple)
         function previewMessage() {
             const text = document.getElementById('message-text').value;
             const type = document.getElementById('message-type').value;
@@ -750,7 +884,12 @@
             sendingProcess = true;
             
             for (let i = 0; i < selectedGroups.length; i++) {
-                if (!sendingProcess) break;
+                if (!sendingProcess) {
+                    // Si se detuvo el proceso, mostrar mensaje
+                    document.getElementById('progress-text').textContent = 
+                        `Envío detenido: ${sent}/${total} mensajes enviados hasta el momento`;
+                    break;
+                }
                 
                 const group = selectedGroups[i];
                 const statusItem = document.createElement('div');
@@ -912,15 +1051,83 @@
                 document.getElementById('progress-text').textContent += ` - ${failedCount} errores`;
             }
             
-            sendingProcess = null;
+        // Vista previa móvil
+        function showMobilePreview() {
+            const text = document.getElementById('message-text').value;
+            const type = document.getElementById('message-type').value;
+            const fileUrl = document.getElementById('file-url').value;
+            
+            if (!text) {
+                alert('Escribe un mensaje primero para ver la vista previa');
+                return;
+            }
+            
+            let preview = text.replace('{grupo}', 'BAITEL BT001-EJEMPLO')
+                             .replace('{fecha}', new Date().toLocaleDateString())
+                             .replace('{hora}', new Date().toLocaleTimeString());
+            
+            // Crear modal de vista móvil
+            const modal = document.createElement('div');
+            modal.className = 'mobile-preview-modal';
+            modal.innerHTML = `
+                <button class="close-preview" onclick="this.parentElement.remove()">✕</button>
+                <div class="mobile-phone">
+                    <div class="phone-screen">
+                        <div class="whatsapp-header">
+                            <div class="group-avatar">📱</div>
+                            <div class="group-info">
+                                <h4>BAITEL BT001-EJEMPLO</h4>
+                                <p>Tú, +52 xxx xxx xxxx</p>
+                            </div>
+                        </div>
+                        <div class="chat-area">
+                            <div class="message-bubble">
+                                <div class="message-text">${preview.replace(/\n/g, '<br>')}</div>
+                                ${type !== 'text' && fileUrl ? `
+                                    <div style="margin-top: 8px; padding: 8px; background: rgba(0,0,0,0.1); border-radius: 8px; font-size: 12px;">
+                                        📎 ${getFileTypeIcon(type)} Archivo adjunto
+                                    </div>
+                                ` : ''}
+                                <div class="message-time">
+                                    ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                    <span class="message-status">✓✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Cerrar con ESC o clic fuera
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') modal.remove();
+            });
+        }
+        
+        // Función auxiliar para iconos de archivos
+        function getFileTypeIcon(type) {
+            const icons = {
+                'image': '🖼️',
+                'video': '🎬',
+                'audio': '🎵',
+                'document': '📄'
+            };
+            return icons[type] || '📎';
+        }
         }
         
         // Detener envío
         function stopSending() {
-            sendingProcess = null;
+            sendingProcess = false; // Cambiar a false para detener el bucle
             document.getElementById('send-btn').classList.remove('hidden');
             document.getElementById('stop-btn').classList.add('hidden');
-            document.getElementById('progress-text').textContent = 'Envío detenido';
+            document.getElementById('progress-text').textContent = 'Envío detenido por el usuario';
         }
         
         // Reintentar grupos con errores
