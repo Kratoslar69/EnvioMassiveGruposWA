@@ -766,27 +766,121 @@
                                           .replace('{fecha}', new Date().toLocaleDateString())
                                           .replace('{hora}', new Date().toLocaleTimeString());
                     
-                    // Simular envío (reemplazar con lógica real)
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    const type = document.getElementById('message-type').value;
+                    const fileUrl = document.getElementById('file-url').value;
                     
-                    // Simular resultado (50% éxito para demo)
-                    const success = Math.random() > 0.3;
+                    console.log(`Enviando a grupo: ${group.name}`);
+                    console.log(`ID del grupo: ${group.id}`);
+                    console.log(`Código de invitación: ${group.invitationCode}`);
                     
+                    // IMPORTANTE: Para grupos, usar el código de invitación, no el ID manual
+                    let recipient;
+                    if (group.manual) {
+                        // Para grupos manuales, usar el código de invitación
+                        recipient = group.invitationCode;
+                    } else {
+                        // Para grupos validados, usar el ID
+                        recipient = group.id;
+                    }
+                    
+                    // Usar proxy CORS para envío REAL
+                    const proxyUrl = 'https://api.allorigins.win/get?url=';
+                    
+                    // CORREGIR: Usar group_id en lugar de recipient para grupos
+                    let targetUrl = `http://api.textmebot.com/send.php?group_id=${encodeURIComponent(recipient)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}`;
+                    
+                    // Agregar archivos según el tipo
+                    if (type !== 'text' && fileUrl) {
+                        if (type === 'image' || type === 'video') {
+                            targetUrl += `&file=${encodeURIComponent(fileUrl)}`;
+                        } else if (type === 'audio') {
+                            targetUrl += `&audio=${encodeURIComponent(fileUrl)}`;
+                        } else if (type === 'document') {
+                            targetUrl += `&document=${encodeURIComponent(fileUrl)}`;
+                        }
+                    }
+                    
+                    const sendUrl = proxyUrl + encodeURIComponent(targetUrl);
+                    console.log('URL completa de envío:', targetUrl);
+                    
+                    // Intentar envío
+                    let success = false;
+                    let errorMessage = 'Error desconocido';
+                    let actualResponse = '';
+                    
+                    try {
+                        const response = await fetch(sendUrl, {
+                            method: 'GET'
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        
+                        const data = await response.json();
+                        actualResponse = data.contents;
+                        
+                        console.log(`Respuesta completa para ${group.name}:`, actualResponse);
+                        
+                        // Analizar la respuesta de TextMeBot
+                        if (actualResponse.includes('Success!') || actualResponse.includes('Message sent successfully')) {
+                            success = true;
+                        } else if (actualResponse.includes('Invalid APIkey') || actualResponse.includes('Invalid Premium APIkey')) {
+                            errorMessage = 'API Key inválida';
+                        } else if (actualResponse.includes('Group not found') || actualResponse.includes('Invalid group')) {
+                            errorMessage = 'Grupo no encontrado - verifica el código';
+                        } else if (actualResponse.includes('You are not member of this group')) {
+                            errorMessage = 'No eres miembro de este grupo';
+                        } else if (actualResponse.includes('Delay needed') || actualResponse.includes('flood')) {
+                            errorMessage = 'Necesita más tiempo entre envíos';
+                        } else if (actualResponse.includes('Failed') || actualResponse.includes('Error')) {
+                            errorMessage = 'Error en el envío';
+                        } else {
+                            // Si no hay indicador claro, revisar si hay respuesta válida
+                            try {
+                                const jsonResponse = JSON.parse(actualResponse);
+                                if (jsonResponse.status === 'success') {
+                                    success = true;
+                                } else {
+                                    errorMessage = jsonResponse.comment || jsonResponse.message || 'Error desconocido';
+                                }
+                            } catch (parseError) {
+                                // Si no es JSON válido y no contiene palabras clave de error
+                                if (actualResponse.length > 10 && !actualResponse.includes('Error') && !actualResponse.includes('Failed')) {
+                                    // Probablemente es una respuesta HTML de éxito
+                                    success = true;
+                                } else {
+                                    errorMessage = 'Respuesta inválida del servidor';
+                                }
+                            }
+                        }
+                        
+                    } catch (fetchError) {
+                        errorMessage = `Error de conexión: ${fetchError.message}`;
+                        console.error('Error de fetch:', fetchError);
+                    }
+                    
+                    // Mostrar resultado
                     if (success) {
                         statusItem.className = 'status-item success';
                         statusItem.innerHTML = `
                             <span>${group.name}</span>
-                            <span>✅ Enviado</span>
+                            <span>✅ Enviado correctamente</span>
                         `;
                         sent++;
+                        console.log(`✅ ÉXITO: Mensaje enviado a ${group.name}`);
                     } else {
                         statusItem.className = 'status-item error';
                         statusItem.innerHTML = `
                             <span>${group.name}</span>
-                            <span>❌ Error: Failed to fetch</span>
+                            <span>❌ ${errorMessage}</span>
                         `;
+                        console.error(`❌ ERROR en ${group.name}: ${errorMessage}`);
+                        console.error('Respuesta completa:', actualResponse);
                     }
+                    
                 } catch (error) {
+                    console.error('Error general:', error);
                     statusItem.className = 'status-item error';
                     statusItem.innerHTML = `
                         <span>${group.name}</span>
