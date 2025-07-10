@@ -446,6 +446,52 @@
         .close-preview:hover {
             background: #f0f0f0 !important;
         }
+        
+        /* Estilos para filtros de estado */
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active {
+            background: #25d366 !important;
+            color: white !important;
+            transform: scale(1.05);
+        }
+        
+        .status-item.filtered-out {
+            display: none !important;
+        }
+        
+        .status-summary {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #25d366;
+        }
+        
+        .status-summary h4 {
+            margin: 0 0 10px 0;
+            color: #1a5d1a;
+        }
+        
+        .summary-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .stat-number {
+            font-weight: bold;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -587,9 +633,25 @@
                 </div>
                 <p id="progress-text">Listo para enviar</p>
                 
-                <button class="btn btn-success" id="send-btn" onclick="startSending()">🚀 Iniciar Envío Masivo</button>
-                <button class="btn btn-danger hidden" id="stop-btn" onclick="stopSending()">⏹️ Detener Envío</button>
-                <button class="btn btn-secondary hidden" id="retry-btn" onclick="retryFailedGroups()">🔄 Reintentar Errores</button>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button class="btn btn-success" id="send-btn" onclick="startSending()">🚀 Iniciar Envío Masivo</button>
+                    <button class="btn btn-danger hidden" id="stop-btn" onclick="stopSending()">⏹️ Detener Envío</button>
+                    <button class="btn btn-secondary hidden" id="retry-btn" onclick="retryFailedGroups()">🔄 Reintentar Solo Errores</button>
+                </div>
+                
+                <!-- Filtros de estado -->
+                <div id="status-filters" class="hidden" style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <strong>Filtrar por estado:</strong>
+                    <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-sm btn-secondary filter-btn active" data-filter="all" onclick="filterByStatus('all')">📋 Todos</button>
+                        <button class="btn btn-sm btn-success filter-btn" data-filter="success" onclick="filterByStatus('success')">✅ Exitosos</button>
+                        <button class="btn btn-sm btn-danger filter-btn" data-filter="error" onclick="filterByStatus('error')">❌ Errores</button>
+                        <button class="btn btn-sm btn-warning filter-btn" data-filter="pending" onclick="filterByStatus('pending')">⏳ Pendientes</button>
+                    </div>
+                    <div style="margin-top: 10px; font-size: 12px; color: #6c757d;">
+                        <span id="filter-stats">Mostrando todos los elementos</span>
+                    </div>
+                </div>
                 
                 <div class="status-panel" id="sending-status">
                     <h4>Estado del Envío:</h4>
@@ -1144,7 +1206,91 @@
             document.getElementById('progress-text').textContent = 'Envío detenido por el usuario';
         }
         
-        // Reintentar grupos con errores
+        // Filtrar resultados por estado
+        function filterByStatus(status) {
+            // Actualizar botones de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${status}"]`).classList.add('active');
+            
+            // Obtener todos los elementos de estado
+            const statusItems = document.querySelectorAll('.status-item');
+            let visibleCount = 0;
+            
+            statusItems.forEach(item => {
+                const isSuccess = item.classList.contains('success');
+                const isError = item.classList.contains('error');
+                const isPending = item.classList.contains('pending');
+                
+                let shouldShow = false;
+                
+                switch(status) {
+                    case 'all':
+                        shouldShow = true;
+                        break;
+                    case 'success':
+                        shouldShow = isSuccess;
+                        break;
+                    case 'error':
+                        shouldShow = isError;
+                        break;
+                    case 'pending':
+                        shouldShow = isPending;
+                        break;
+                }
+                
+                if (shouldShow) {
+                    item.classList.remove('filtered-out');
+                    visibleCount++;
+                } else {
+                    item.classList.add('filtered-out');
+                }
+            });
+            
+            // Actualizar estadísticas del filtro
+            const filterStats = document.getElementById('filter-stats');
+            const statusNames = {
+                'all': 'todos los elementos',
+                'success': 'envíos exitosos',
+                'error': 'errores de envío',
+                'pending': 'elementos pendientes'
+            };
+            
+            filterStats.textContent = `Mostrando ${visibleCount} ${statusNames[status]}`;
+        }
+        
+        // Mostrar resumen de envío
+        function showSendingSummary(sent, failed, total) {
+            const summaryHtml = `
+                <div class="status-summary">
+                    <h4>📊 Resumen del Envío Masivo</h4>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <span>✅ Exitosos:</span>
+                            <span class="stat-number" style="color: #28a745;">${sent}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>❌ Errores:</span>
+                            <span class="stat-number" style="color: #dc3545;">${failed}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>📋 Total:</span>
+                            <span class="stat-number">${total}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>📈 Tasa de éxito:</span>
+                            <span class="stat-number" style="color: #25d366;">${Math.round((sent/total)*100)}%</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const statusList = document.getElementById('status-list');
+            statusList.insertAdjacentHTML('afterbegin', summaryHtml);
+        }
+        
+        // Reintentar solo grupos con errores
         function retryFailedGroups() {
             const errorItems = document.querySelectorAll('.status-item.error');
             if (errorItems.length === 0) {
@@ -1152,9 +1298,175 @@
                 return;
             }
             
-            alert(`Reintentando ${errorItems.length} grupos con errores...`);
-            // Aquí iría la lógica de reintento
-            document.getElementById('retry-btn').classList.add('hidden');
+            const failedGroupNames = Array.from(errorItems).map(item => 
+                item.querySelector('span').textContent
+            );
+            
+            const failedGroups = groups.filter(g => 
+                g.selected && failedGroupNames.includes(g.name)
+            );
+            
+            if (confirm(`¿Reintentar envío solo a los ${failedGroups.length} grupos con errores?\n\nEsto evitará envíos duplicados a los grupos exitosos.`)) {
+                // Limpiar solo los elementos de error para el reintento
+                errorItems.forEach(item => item.remove());
+                
+                // Ocultar filtros temporalmente
+                document.getElementById('status-filters').classList.add('hidden');
+                document.getElementById('retry-btn').classList.add('hidden');
+                
+                // Iniciar envío solo para grupos con errores
+                startSendingForSpecificGroups(failedGroups);
+            }
+        }
+        
+        // Envío específico para grupos seleccionados (reintentos)
+        async function startSendingForSpecificGroups(targetGroups) {
+            const apikey = document.getElementById('apikey').value;
+            const text = document.getElementById('message-text').value;
+            const delay = parseInt(document.getElementById('delay').value) * 1000;
+            
+            document.getElementById('send-btn').classList.add('hidden');
+            document.getElementById('stop-btn').classList.remove('hidden');
+            
+            const statusList = document.getElementById('status-list');
+            let sent = 0;
+            const total = targetGroups.length;
+            sendingProcess = true;
+            
+            // Actualizar progreso para reintentos
+            document.getElementById('progress-text').textContent = `Reintentando errores: 0/${total}`;
+            
+            for (let i = 0; i < targetGroups.length; i++) {
+                if (!sendingProcess) {
+                    document.getElementById('progress-text').textContent = 
+                        `Reintento detenido: ${sent}/${total} grupos procesados`;
+                    break;
+                }
+                
+                const group = targetGroups[i];
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item pending';
+                statusItem.innerHTML = `
+                    <span>${group.name}</span>
+                    <span>🔄 Reintentando...</span>
+                `;
+                statusList.appendChild(statusItem);
+                
+                // Usar la misma lógica de envío que el proceso principal
+                try {
+                    const messageText = text.replace('{grupo}', group.name)
+                                          .replace('{fecha}', new Date().toLocaleDateString())
+                                          .replace('{hora}', new Date().toLocaleTimeString());
+                    
+                    console.log(`Reintentando envío a: ${group.name}`);
+                    
+                    let recipient;
+                    if (group.manual) {
+                        recipient = group.invitationCode;
+                    } else {
+                        recipient = group.id;
+                    }
+                    
+                    const proxyUrl = 'https://api.allorigins.win/get?url=';
+                    let targetUrl = `http://api.textmebot.com/send.php?group_id=${encodeURIComponent(recipient)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}`;
+                    
+                    const sendUrl = proxyUrl + encodeURIComponent(targetUrl);
+                    
+                    let success = false;
+                    let errorMessage = 'Error desconocido';
+                    
+                    try {
+                        const response = await fetch(sendUrl, { method: 'GET' });
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        
+                        const data = await response.json();
+                        const actualResponse = data.contents;
+                        
+                        console.log(`Respuesta reintento ${group.name}:`, actualResponse);
+                        
+                        if (actualResponse.includes('Success!') || actualResponse.includes('Message sent successfully')) {
+                            success = true;
+                        } else if (actualResponse.includes('Invalid APIkey')) {
+                            errorMessage = 'API Key inválida';
+                        } else if (actualResponse.includes('Group not found')) {
+                            errorMessage = 'Grupo no encontrado';
+                        } else if (actualResponse.includes('You are not member')) {
+                            errorMessage = 'No eres miembro del grupo';
+                        } else if (actualResponse.includes('Delay needed')) {
+                            errorMessage = 'Necesita más tiempo entre envíos';
+                        } else {
+                            try {
+                                const jsonResponse = JSON.parse(actualResponse);
+                                if (jsonResponse.status === 'success') {
+                                    success = true;
+                                } else {
+                                    errorMessage = jsonResponse.comment || 'Error desconocido';
+                                }
+                            } catch (parseError) {
+                                if (actualResponse.length > 10 && !actualResponse.includes('Error')) {
+                                    success = true;
+                                } else {
+                                    errorMessage = 'Respuesta inválida del servidor';
+                                }
+                            }
+                        }
+                        
+                    } catch (fetchError) {
+                        errorMessage = `Error de conexión: ${fetchError.message}`;
+                    }
+                    
+                    if (success) {
+                        statusItem.className = 'status-item success';
+                        statusItem.innerHTML = `
+                            <span>${group.name}</span>
+                            <span>✅ Reintento exitoso</span>
+                        `;
+                        sent++;
+                    } else {
+                        statusItem.className = 'status-item error';
+                        statusItem.innerHTML = `
+                            <span>${group.name}</span>
+                            <span>❌ ${errorMessage}</span>
+                        `;
+                    }
+                    
+                } catch (error) {
+                    statusItem.className = 'status-item error';
+                    statusItem.innerHTML = `
+                        <span>${group.name}</span>
+                        <span>❌ Error: ${error.message}</span>
+                    `;
+                }
+                
+                // Actualizar progreso
+                const progress = ((i + 1) / total) * 100;
+                document.getElementById('progress-fill').style.width = progress + '%';
+                document.getElementById('progress-text').textContent = 
+                    `Reintentando: ${i + 1}/${total} (${sent} exitosos)`;
+                
+                // Esperar antes del siguiente envío
+                if (i < targetGroups.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            
+            // Finalizar reintento
+            document.getElementById('send-btn').classList.remove('hidden');
+            document.getElementById('stop-btn').classList.add('hidden');
+            document.getElementById('progress-text').textContent = 
+                `Reintento completado: ${sent}/${total} exitosos`;
+            
+            // Mostrar filtros si aún hay errores
+            const remainingErrors = total - sent;
+            if (remainingErrors > 0) {
+                document.getElementById('retry-btn').classList.remove('hidden');
+                document.getElementById('status-filters').classList.remove('hidden');
+            }
+            
+            sendingProcess = null;
         }
         
         // Cargar desde archivo
