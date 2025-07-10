@@ -564,7 +564,7 @@
                         </div>
                     </div>
                     
-                    <div id="groups-container">
+                    <div id="groups-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #e9ecef; border-radius: 8px; background: white;">
                         <!-- Los grupos se cargarán aquí dinámicamente -->
                     </div>
                     
@@ -603,7 +603,6 @@
                 </div>
                 
                 <button class="btn btn-primary" onclick="previewMessage()">👁️ Vista Previa</button>
-                <button class="btn btn-primary" onclick="showMobilePreview()">📱 Vista Móvil</button>
                 <button class="btn btn-secondary" onclick="saveTemplate()">💾 Guardar Plantilla</button>
                 
                 <div id="message-preview" class="status-panel hidden">
@@ -655,7 +654,7 @@
                 
                 <div class="status-panel" id="sending-status">
                     <h4>Estado del Envío:</h4>
-                    <div id="status-list"></div>
+                    <div id="status-list" style="max-height: 400px; overflow-y: auto; padding-right: 10px;"></div>
                 </div>
             </div>
         </div>
