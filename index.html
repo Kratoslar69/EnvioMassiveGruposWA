@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envío Masivo WhatsApp - TextMeBot</title>
-    <meta name="description" content="Sistema web para envío masivo de mensajes a grupos de WhatsApp usando TextMeBot API">
+    <title>Envío Masivo WhatsApp - TextMeBot MEJORADO</title>
+    <meta name="description" content="Sistema web mejorado para envío masivo de mensajes a grupos de WhatsApp usando TextMeBot API">
     <meta name="keywords" content="WhatsApp, envío masivo, TextMeBot, grupos, mensajes">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
     <style>
@@ -142,6 +142,11 @@
         .btn-secondary {
             background: #6c757d;
             color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
         }
         
         .btn-sm {
@@ -288,180 +293,33 @@
             width: 0%;
             transition: width 0.3s ease;
         }
-        
-        .file-upload {
-            border: 2px dashed #e9ecef;
-            border-radius: 8px;
-            padding: 40px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .file-upload:hover {
-            border-color: #25d366;
-            background: #f0fdf4;
-        }
-        
-        /* Estilos para vista móvil */
-        .mobile-preview-modal {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            background: rgba(0, 0, 0, 0.8) !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            z-index: 9999 !important;
-        }
-        
-        .mobile-phone {
-            width: 320px;
-            height: 640px;
-            background: #000;
-            border-radius: 30px;
+
+        /* Mejoras específicas */
+        .enhanced-panel {
+            background: #e8f5e8;
+            border: 2px solid #25d366;
+            border-radius: 10px;
             padding: 20px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
         }
         
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #075e54 0%, #128c7e 100%);
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .whatsapp-header {
-            background: #075e54;
+        .retry-panel {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
             padding: 15px;
-            color: white;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
+            margin-bottom: 20px;
         }
-        
-        .group-avatar {
-            width: 40px;
-            height: 40px;
-            background: #25d366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        
-        .group-info h4 {
-            margin: 0;
-            font-size: 16px;
-        }
-        
-        .group-info p {
-            margin: 0;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-        
-        .chat-area {
-            flex: 1;
-            padding: 20px 15px;
-            background: #e5ddd5;
-            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><pattern id="whatsapp-bg" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="2" fill="%23d9d9d9" opacity="0.3"/></pattern></defs><rect width="100" height="100" fill="url(%23whatsapp-bg)"/></svg>');
-            position: relative;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-        
-        .message-bubble {
-            background: #dcf8c6;
-            border-radius: 18px;
-            padding: 12px 16px;
-            margin-bottom: 10px;
-            max-width: 85%;
-            margin-left: auto;
-            position: relative;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .message-bubble::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            bottom: 0;
-            width: 0;
-            height: 0;
-            border-left: 15px solid #dcf8c6;
-            border-bottom: 15px solid transparent;
-        }
-        
-        .message-text {
-            font-size: 14px;
-            line-height: 1.4;
-            color: #303030;
-            word-wrap: break-word;
-        }
-        
-        .message-time {
-            font-size: 11px;
-            color: #999;
-            margin-top: 5px;
-            text-align: right;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 3px;
-        }
-        
-        .message-status {
-            color: #25d366;
-            font-size: 16px;
-        }
-        
-        .close-preview {
-            position: absolute !important;
-            top: 20px !important;
-            right: 20px !important;
-            background: #fff !important;
-            border: none !important;
-            border-radius: 50% !important;
-            width: 40px !important;
-            height: 40px !important;
-            font-size: 20px !important;
-            cursor: pointer !important;
-            z-index: 10000 !important;
-            color: #000 !important;
-        }
-        
-        .close-preview:hover {
-            background: #f0f0f0 !important;
-        }
-        
-        /* Estilos para filtros de estado */
-        .filter-btn {
-            transition: all 0.3s ease;
-        }
-        
+
         .filter-btn.active {
             background: #25d366 !important;
             color: white !important;
-            transform: scale(1.05);
         }
-        
+
         .status-item.filtered-out {
             display: none !important;
         }
-        
+
         .status-summary {
             background: #e8f5e8;
             padding: 15px;
@@ -469,25 +327,20 @@
             margin-bottom: 15px;
             border-left: 4px solid #25d366;
         }
-        
-        .status-summary h4 {
-            margin: 0 0 10px 0;
-            color: #1a5d1a;
-        }
-        
+
         .summary-stats {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
         }
-        
+
         .stat-item {
             display: flex;
             align-items: center;
             gap: 5px;
             font-size: 14px;
         }
-        
+
         .stat-number {
             font-weight: bold;
             font-size: 16px;
@@ -497,15 +350,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 Envío Masivo WhatsApp</h1>
+            <h1>🚀 Envío Masivo WhatsApp MEJORADO</h1>
             <p>Sistema de envío de mensajes a múltiples grupos usando TextMeBot API</p>
             <div style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 20px; display: inline-block; margin: 10px 0;">
-                <strong>📱 Versión 2.0 WhatsApp Edition</strong> | ✅ Pestañas Funcionales | 🔤 Ordenamiento Automático
+                <strong>📱 Versión 2.1 MEJORADA</strong> | ✅ Detección Automática | 🔄 Reenvío con Archivos
             </div>
             <p style="font-size: 0.9em; opacity: 0.8;">
                 📖 <a href="javascript:void(0)" style="color: white;" onclick="showHelp()">Guía de Uso</a> | 
-                📁 <a href="javascript:void(0)" style="color: white;" onclick="exportConfig()">Exportar Config</a> |
-                ⭐ <a href="https://github.com/tu-usuario/whatsapp-bulk-sender" target="_blank" style="color: white;">GitHub</a>
+                📁 <a href="javascript:void(0)" style="color: white;" onclick="exportConfig()">Exportar Config Completa</a> |
+                👥 <a href="javascript:void(0)" style="color: white;" onclick="exportGroupsOnly()">Exportar Solo Grupos</a>
             </p>
         </div>
         
@@ -540,14 +393,40 @@
             <div id="groups-tab" class="tab-content hidden">
                 <h3>Gestión de Grupos</h3>
                 
-                <div class="form-group">
-                    <label for="invitation-code">Código de Invitación del Grupo:</label>
-                    <input type="text" id="invitation-code" class="form-control" placeholder="RTiy3mHqIDfD22H1InRR5E">
-                    <small style="color: #6c757d;">Obtén el código desde el enlace de invitación de WhatsApp</small>
+                <!-- Panel mejorado para agregar grupos -->
+                <div class="enhanced-panel">
+                    <h4>🔍 Agregar Grupo - Método Original Mejorado</h4>
+                    <div class="form-group">
+                        <label for="invitation-code-original">Código de Invitación del Grupo:</label>
+                        <input type="text" id="invitation-code-original" class="form-control" placeholder="RTiy3mHqIDfD22H1InRR5E">
+                        <small style="color: #6c757d;">Obtén el código desde el enlace de invitación de WhatsApp</small>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="addGroupOriginalMethod()">➕ Agregar Grupo (Auto-detectar)</button>
+                    <div id="add-group-status-original"></div>
                 </div>
                 
-                <button class="btn btn-primary" onclick="addGroup()">➕ Agregar Grupo</button>
+                <div class="enhanced-panel" style="margin-top: 15px;">
+                    <h4>🔧 Método Manual (Si el automático falla)</h4>
+                    <div class="form-group">
+                        <label for="invitation-input">Enlace o Código de Invitación:</label>
+                        <input type="text" id="invitation-input" class="form-control" placeholder="https://chat.whatsapp.com/RTiy3mHqIDfD22H1InRR5E o solo RTiy3mHqIDfD22H1InRR5E">
+                        <small style="color: #6c757d;">Pega el enlace completo de WhatsApp o solo el código</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="group-name-input">Nombre del Grupo:</label>
+                        <input type="text" id="group-name-input" class="form-control" placeholder="Nombre del grupo">
+                        <small style="color: #6c757d;">Ingresa el nombre del grupo manualmente</small>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="addGroupImproved()">➕ Agregar Manual</button>
+                    <button class="btn btn-warning" onclick="testSingleGroup()">🧪 Probar Último Grupo</button>
+                    <div id="add-group-status"></div>
+                </div>
+                
                 <button class="btn btn-secondary" onclick="loadFromFile()">📁 Cargar desde Archivo</button>
+                <button class="btn btn-success" onclick="exportGroupsOnly()">💾 Exportar Solo Grupos</button>
                 <button class="btn btn-danger" onclick="clearAllGroups()">🗑️ Limpiar Todo</button>
                 
                 <div class="groups-container">
@@ -620,11 +499,24 @@
                     TextMeBot puede banear tu número si intentas enviar a grupos donde no perteneces.
                 </div>
                 
+                <!-- Panel de reenvío mejorado -->
+                <div id="retry-panel" class="retry-panel hidden">
+                    <h4>🔄 Reenvío de Mensajes con Errores MEJORADO</h4>
+                    <div>
+                        <p><strong>✅ Incluye archivos adjuntos</strong></p>
+                        <p><strong>✅ Configuración original completa</strong></p>
+                        <p>Grupos con errores: <strong id="failed-count">0</strong></p>
+                    </div>
+                    <button class="btn btn-warning" onclick="retryFailedGroupsWithFiles()">🔄 Reintentar Solo Errores (CON ARCHIVOS)</button>
+                    <button class="btn btn-secondary" onclick="hideRetryPanel()">❌ Cerrar</button>
+                </div>
+                
                 <div id="send-summary">
                     <h4>Resumen del Envío:</h4>
                     <p><strong>Grupos seleccionados:</strong> <span id="selected-groups-count">0</span></p>
                     <p><strong>Tipo de mensaje:</strong> <span id="message-type-summary">-</span></p>
                     <p><strong>Retraso configurado:</strong> <span id="delay-summary">-</span> segundos</p>
+                    <p><strong>Archivo adjunto:</strong> <span id="file-summary">-</span></p>
                 </div>
                 
                 <div class="progress-bar">
@@ -635,7 +527,6 @@
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                     <button class="btn btn-success" id="send-btn" onclick="startSending()">🚀 Iniciar Envío Masivo</button>
                     <button class="btn btn-danger hidden" id="stop-btn" onclick="stopSending()">⏹️ Detener Envío</button>
-                    <button class="btn btn-secondary hidden" id="retry-btn" onclick="retryFailedGroups()">🔄 Reintentar Solo Errores</button>
                 </div>
                 
                 <!-- Filtros de estado -->
@@ -667,6 +558,8 @@
         let currentTab = 'config';
         let filteredGroups = [];
         let sortDirection = 'asc';
+        let lastSendingConfig = null; // Para guardar la config del último envío
+        let failedGroups = []; // Para rastrear grupos con errores
         
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
@@ -684,6 +577,274 @@
             // Auto-guardar cada 30 segundos
             setInterval(saveConfig, 30000);
         });
+        
+        // FUNCIÓN MEJORADA: Agregar grupo con mejor validación de ID
+        function addGroupImproved() {
+            const invitationInput = document.getElementById('invitation-input').value.trim();
+            const groupNameInput = document.getElementById('group-name-input').value.trim();
+            
+            if (!invitationInput) {
+                showAlert('add-group-status', 'danger', '❌ Por favor ingresa un enlace o código de invitación');
+                return;
+            }
+            
+            if (!groupNameInput) {
+                showAlert('add-group-status', 'danger', '❌ Por favor ingresa el nombre del grupo');
+                return;
+            }
+            
+            // Extraer código de invitación
+            let invitationCode = extractInvitationCode(invitationInput);
+            
+            if (!invitationCode) {
+                showAlert('add-group-status', 'danger', '❌ Código de invitación inválido');
+                return;
+            }
+            
+            // Verificar duplicados
+            const existingGroup = groups.find(g => g.invitationCode === invitationCode);
+            if (existingGroup) {
+                showAlert('add-group-status', 'warning', `⚠️ El grupo "${existingGroup.name}" ya está agregado con este código`);
+                return;
+            }
+            
+            // MEJORA: Crear ID más realista para grupos de WhatsApp
+            // Usar el código de invitación como base para el ID
+            const groupId = `${invitationCode}@g.us`;
+            
+            // Crear grupo
+            const group = {
+                id: groupId,
+                name: groupNameInput,
+                invitationCode: invitationCode,
+                selected: true,
+                manual: true,
+                dateAdded: new Date().toISOString()
+            };
+            
+            groups.push(group);
+            renderGroups();
+            saveConfig();
+            
+            // Limpiar formulario
+            document.getElementById('invitation-input').value = '';
+            document.getElementById('group-name-input').value = '';
+            
+            showAlert('add-group-status', 'success', `✅ Grupo "${groupNameInput}" agregado exitosamente\n🆔 ID: ${groupId}`);
+            
+            // Ocultar mensaje después de 3 segundos
+            setTimeout(() => {
+                document.getElementById('add-group-status').innerHTML = '';
+            }, 3000);
+        }
+        
+        // FUNCIÓN MEJORADA: Extraer código de invitación
+        function extractInvitationCode(input) {
+            // Limpiar el input
+            input = input.trim();
+            
+            // Si es un enlace completo
+            if (input.includes('chat.whatsapp.com/')) {
+                const match = input.match(/chat\.whatsapp\.com\/([A-Za-z0-9_-]+)/);
+                return match ? match[1] : null;
+            }
+            
+            // Si es solo el código
+            if (/^[A-Za-z0-9_-]+$/.test(input) && input.length > 10) {
+                return input;
+            }
+            
+            return null;
+        }
+        
+        // FUNCIÓN MEJORADA: Reenvío con archivos incluidos
+        async function retryFailedGroupsWithFiles() {
+            if (failedGroups.length === 0) {
+                alert('No hay grupos con errores para reintentar');
+                return;
+            }
+            
+            if (!lastSendingConfig) {
+                alert('No se encontró la configuración del último envío');
+                return;
+            }
+            
+            const confirmed = confirm(`¿Reintentar envío a ${failedGroups.length} grupos con errores?\n\n✅ Se incluirán archivos adjuntos\n✅ Se usará la configuración original\n✅ No se enviarán duplicados a grupos exitosos`);
+            
+            if (!confirmed) {
+                return;
+            }
+            
+            // Ocultar panel de reintento
+            hideRetryPanel();
+            
+            // Configurar interfaz para reintento
+            document.getElementById('send-btn').classList.add('hidden');
+            document.getElementById('stop-btn').classList.remove('hidden');
+            
+            const statusList = document.getElementById('status-list');
+            let sent = 0;
+            const total = failedGroups.length;
+            sendingProcess = true;
+            
+            // Actualizar progreso
+            document.getElementById('progress-text').textContent = `Reintentando con archivos: 0/${total}`;
+            
+            // Limpiar elementos de error anteriores para grupos que se van a reintentar
+            const errorItems = document.querySelectorAll('.status-item.error');
+            errorItems.forEach(item => {
+                const groupName = item.querySelector('span').textContent;
+                if (failedGroups.some(g => g.name === groupName)) {
+                    item.remove();
+                }
+            });
+            
+            for (let i = 0; i < failedGroups.length; i++) {
+                if (!sendingProcess) {
+                    break;
+                }
+                
+                const group = failedGroups[i];
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item pending';
+                statusItem.innerHTML = `
+                    <span>${group.name}</span>
+                    <span>🔄 Reintentando (con archivos)...</span>
+                `;
+                statusList.appendChild(statusItem);
+                
+                try {
+                    // Usar configuración original del último envío
+                    const messageText = lastSendingConfig.text.replace('{grupo}', group.name)
+                                                              .replace('{fecha}', new Date().toLocaleDateString())
+                                                              .replace('{hora}', new Date().toLocaleTimeString());
+                    
+                    console.log(`Reintentando envío a: ${group.name} con configuración original`);
+                    
+                    // USAR LA MISMA LÓGICA DE ENVÍO CON ARCHIVOS
+                    const proxyUrl = 'https://api.allorigins.win/get?url=';
+                    let targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(group.id)}&apikey=${encodeURIComponent(lastSendingConfig.apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
+                    
+                    // AGREGAR ARCHIVOS SI ESTABAN EN LA CONFIGURACIÓN ORIGINAL
+                    if (lastSendingConfig.messageType !== 'text' && lastSendingConfig.fileUrl) {
+                        const fileUrl = lastSendingConfig.fileUrl.trim();
+                        
+                        switch (lastSendingConfig.messageType) {
+                            case 'image':
+                            case 'video':
+                                targetUrl += `&file=${encodeURIComponent(fileUrl)}`;
+                                break;
+                            case 'audio':
+                                targetUrl += `&audio=${encodeURIComponent(fileUrl)}`;
+                                break;
+                            case 'document':
+                                targetUrl += `&document=${encodeURIComponent(fileUrl)}`;
+                                break;
+                        }
+                    }
+                    
+                    const sendUrl = proxyUrl + encodeURIComponent(targetUrl);
+                    console.log('URL de reintento:', targetUrl);
+                    
+                    const response = await fetch(sendUrl);
+                    const data = await response.json();
+                    const resultText = data.contents;
+                    
+                    console.log(`Respuesta reintento ${group.name}:`, resultText);
+                    
+                    let success = false;
+                    let errorMessage = 'Error desconocido';
+                    
+                    try {
+                        const result = JSON.parse(resultText);
+                        if (result.status === 'success') {
+                            success = true;
+                        } else {
+                            errorMessage = result.comment || result.msg || 'Error en el envío';
+                        }
+                    } catch (parseError) {
+                        // Verificar respuestas HTML
+                        if (resultText.includes('Success!') || resultText.includes('success')) {
+                            success = true;
+                        } else if (resultText.includes('Failed') || resultText.includes('ERROR')) {
+                            errorMessage = 'Error en el envío';
+                        } else if (resultText.includes('Invalid APIkey')) {
+                            errorMessage = 'API Key inválida';
+                        } else if (resultText.includes('You are not member')) {
+                            errorMessage = 'No eres miembro de este grupo';
+                        } else if (resultText.includes('Delay needed') || resultText.includes('8 sec')) {
+                            errorMessage = '8 sec. Delay needed';
+                        } else {
+                            success = true;
+                        }
+                    }
+                    
+                    if (success) {
+                        statusItem.className = 'status-item success';
+                        statusItem.innerHTML = `
+                            <span>${group.name}</span>
+                            <span>✅ Reintento exitoso ${lastSendingConfig.fileUrl ? '(con archivo)' : ''}</span>
+                        `;
+                        sent++;
+                        
+                        // Remover de la lista de fallos
+                        failedGroups = failedGroups.filter(fg => fg.name !== group.name);
+                    } else {
+                        statusItem.className = 'status-item error';
+                        statusItem.innerHTML = `
+                            <span>${group.name}</span>
+                            <span>❌ ${errorMessage}</span>
+                        `;
+                    }
+                    
+                } catch (error) {
+                    statusItem.className = 'status-item error';
+                    statusItem.innerHTML = `
+                        <span>${group.name}</span>
+                        <span>❌ Error: ${error.message}</span>
+                    `;
+                }
+                
+                // Actualizar progreso
+                const progress = ((i + 1) / total) * 100;
+                document.getElementById('progress-fill').style.width = progress + '%';
+                document.getElementById('progress-text').textContent = 
+                    `Reintentando: ${i + 1}/${total} (${sent} exitosos)`;
+                
+                // Esperar antes del siguiente envío
+                if (i < failedGroups.length - 1) {
+                    await new Promise(resolve => setTimeout(resolve, lastSendingConfig.delay * 1000));
+                }
+            }
+            
+            // Finalizar reintento
+            document.getElementById('send-btn').classList.remove('hidden');
+            document.getElementById('stop-btn').classList.add('hidden');
+            document.getElementById('progress-text').textContent = 
+                `Reintento completado: ${sent}/${total} exitosos`;
+            
+            // Mostrar botón de reintento si aún hay errores
+            if (failedGroups.length > 0) {
+                showRetryPanel();
+            }
+            
+            sendingProcess = null;
+        }
+        
+        // Función para mostrar panel de reintento
+        function showRetryPanel() {
+            if (failedGroups.length === 0) {
+                return;
+            }
+            
+            document.getElementById('failed-count').textContent = failedGroups.length;
+            document.getElementById('retry-panel').classList.remove('hidden');
+        }
+        
+        // Función para ocultar panel de reintento
+        function hideRetryPanel() {
+            document.getElementById('retry-panel').classList.add('hidden');
+        }
         
         // Gestión de pestañas
         function switchTab(tab) {
@@ -741,43 +902,6 @@
             }
         }
         
-        // Agregar grupo
-        async function addGroup() {
-            const invitationCode = document.getElementById('invitation-code').value.trim();
-            
-            if (!invitationCode) {
-                alert('Por favor ingresa el código de invitación');
-                return;
-            }
-            
-            const groupName = prompt('¿Cuál es el nombre del grupo?', 'Grupo Manual');
-            if (groupName) {
-                addGroupManually(invitationCode, groupName);
-            }
-        }
-        
-        // Agregar grupo manualmente
-        function addGroupManually(invitationCode, groupName) {
-            const group = {
-                id: `manual_${Date.now()}@g.us`,
-                name: groupName,
-                invitationCode: invitationCode,
-                selected: true,
-                manual: true
-            };
-            
-            // Verificar duplicados
-            if (!groups.find(g => g.invitationCode === invitationCode)) {
-                groups.push(group);
-                renderGroups();
-                document.getElementById('invitation-code').value = '';
-                saveConfig();
-                alert(`Grupo "${groupName}" agregado y ordenado correctamente.`);
-            } else {
-                alert('Este grupo ya está agregado');
-            }
-        }
-        
         // Ordenar grupos
         function sortGroups() {
             groups.sort((a, b) => {
@@ -821,6 +945,7 @@
                     <h4>${group.name}</h4>
                     <div class="group-info">ID: ${group.id}</div>
                     <div class="group-info">Código: ${group.invitationCode}</div>
+                    ${group.dateAdded ? `<div class="group-info">Agregado: ${new Date(group.dateAdded).toLocaleString()}</div>` : ''}
                     <label>
                         <input type="checkbox" class="checkbox" ${group.selected ? 'checked' : ''} 
                                onchange="toggleGroupSelection(${groups.indexOf(group)})">
@@ -894,7 +1019,7 @@
             }
         }
         
-        // Vista previa del mensaje (versión simple)
+        // Vista previa del mensaje
         function previewMessage() {
             const text = document.getElementById('message-text').value;
             const type = document.getElementById('message-type').value;
@@ -909,7 +1034,8 @@
             content += `<strong>Texto:</strong><br>${preview.replace(/\n/g, '<br>')}`;
             
             if (type !== 'text' && fileUrl) {
-                content += `<br><strong>Archivo:</strong> ${fileUrl}`;
+                content += `<br><br><strong>Archivo adjunto:</strong><br>`;
+                content += `<a href="${fileUrl}" target="_blank" style="color: #25d366;">${fileUrl}</a>`;
             }
             content += `</div>`;
             
@@ -922,10 +1048,22 @@
             const selectedCount = groups.filter(g => g.selected).length;
             const messageType = document.getElementById('message-type').value;
             const delay = document.getElementById('delay').value;
+            const fileUrl = document.getElementById('file-url').value;
             
             document.getElementById('selected-groups-count').textContent = selectedCount;
             document.getElementById('message-type-summary').textContent = messageType;
             document.getElementById('delay-summary').textContent = delay;
+            
+            // Mostrar información del archivo en el resumen
+            const fileSummary = document.getElementById('file-summary');
+            if (messageType !== 'text' && fileUrl) {
+                const fileName = fileUrl.split('/').pop();
+                fileSummary.textContent = fileName;
+                fileSummary.style.color = '#25d366';
+            } else {
+                fileSummary.textContent = 'Sin archivo';
+                fileSummary.style.color = '#6c757d';
+            }
         }
         
         // Iniciar envío masivo
@@ -938,12 +1076,27 @@
             
             const apikey = document.getElementById('apikey').value;
             const text = document.getElementById('message-text').value;
-            const delay = parseInt(document.getElementById('delay').value) * 1000;
+            const delay = parseInt(document.getElementById('delay').value);
+            const messageType = document.getElementById('message-type').value;
+            const fileUrl = document.getElementById('file-url').value;
             
             if (!apikey || !text) {
                 alert('Completa la configuración y el mensaje');
                 return;
             }
+            
+            // Guardar configuración del envío para reenvíos
+            lastSendingConfig = {
+                apikey: apikey,
+                text: text,
+                delay: delay,
+                messageType: messageType,
+                fileUrl: fileUrl,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Limpiar lista de fallos anteriores
+            failedGroups = [];
             
             document.getElementById('send-btn').classList.add('hidden');
             document.getElementById('stop-btn').classList.remove('hidden');
@@ -955,11 +1108,11 @@
             const total = selectedGroups.length;
             sendingProcess = true;
             
+            // Mostrar filtros
+            document.getElementById('status-filters').classList.remove('hidden');
+            
             for (let i = 0; i < selectedGroups.length; i++) {
                 if (!sendingProcess) {
-                    // Si se detuvo el proceso, mostrar mensaje
-                    document.getElementById('progress-text').textContent = 
-                        `Envío detenido: ${sent}/${total} mensajes enviados hasta el momento`;
                     break;
                 }
                 
@@ -968,7 +1121,7 @@
                 statusItem.className = 'status-item pending';
                 statusItem.innerHTML = `
                     <span>${group.name}</span>
-                    <span>Enviando...</span>
+                    <span>Enviando${fileUrl ? ' (con archivo)' : ''}...</span>
                 `;
                 statusList.appendChild(statusItem);
                 
@@ -977,26 +1130,35 @@
                                           .replace('{fecha}', new Date().toLocaleDateString())
                                           .replace('{hora}', new Date().toLocaleTimeString());
                     
-                    const type = document.getElementById('message-type').value;
-                    const fileUrl = document.getElementById('file-url').value;
+                    // MEJORA: Usar el código de invitación como recipient para grupos manuales
+                    let recipientId = group.id;
                     
-                    console.log(`Enviando a grupo: ${group.name}`);
+                    // Si es un grupo manual o agregado con el método original, usar diferentes estrategias
+                    if (group.manual || group.auto) {
+                        // Para grupos manuales, probar primero con el código de invitación
+                        recipientId = group.invitationCode;
+                        console.log(`Grupo ${group.manual ? 'manual' : 'automático'}: usando código como recipient: ${recipientId}`);
+                    }
                     
-                    // USAR EXACTAMENTE LA MISMA LÓGICA DE LA VERSIÓN 31 QUE FUNCIONABA
                     // Usar proxy CORS para envío
                     const proxyUrl = 'https://api.allorigins.win/get?url=';
-                    
-                    // Construir URL según la documentación de TextMeBot (IGUAL QUE VERSIÓN 31)
-                    let targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(group.id)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
+                    let targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(recipientId)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
                     
                     // Agregar archivos según el tipo
-                    if (type !== 'text' && fileUrl) {
-                        if (type === 'image' || type === 'video') {
-                            targetUrl += `&file=${encodeURIComponent(fileUrl)}`;
-                        } else if (type === 'audio') {
-                            targetUrl += `&audio=${encodeURIComponent(fileUrl)}`;
-                        } else if (type === 'document') {
-                            targetUrl += `&document=${encodeURIComponent(fileUrl)}`;
+                    if (messageType !== 'text' && fileUrl) {
+                        const cleanFileUrl = fileUrl.trim();
+                        
+                        switch (messageType) {
+                            case 'image':
+                            case 'video':
+                                targetUrl += `&file=${encodeURIComponent(cleanFileUrl)}`;
+                                break;
+                            case 'audio':
+                                targetUrl += `&audio=${encodeURIComponent(cleanFileUrl)}`;
+                                break;
+                            case 'document':
+                                targetUrl += `&document=${encodeURIComponent(cleanFileUrl)}`;
+                                break;
                         }
                     }
                     
@@ -1012,28 +1174,84 @@
                     let success = false;
                     let errorMessage = 'Error desconocido';
                     
+                    // MEJORA: Mejor manejo de respuestas de error
                     try {
+                        // Intentar parsear como JSON primero
                         const result = JSON.parse(resultText);
                         if (result.status === 'success') {
                             success = true;
                         } else {
                             errorMessage = result.comment || result.msg || 'Error en el envío';
+                            
+                            // Si falla con código de invitación, intentar con ID del grupo
+                            if (recipientId === group.invitationCode && group.id !== group.invitationCode) {
+                                console.log('Intentando con ID del grupo:', group.id);
+                                // Hacer segundo intento con el ID
+                                recipientId = group.id;
+                                targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(recipientId)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
+                                
+                                if (messageType !== 'text' && fileUrl) {
+                                    const cleanFileUrl = fileUrl.trim();
+                                    switch (messageType) {
+                                        case 'image':
+                                        case 'video':
+                                            targetUrl += `&file=${encodeURIComponent(cleanFileUrl)}`;
+                                            break;
+                                        case 'audio':
+                                            targetUrl += `&audio=${encodeURIComponent(cleanFileUrl)}`;
+                                            break;
+                                        case 'document':
+                                            targetUrl += `&document=${encodeURIComponent(cleanFileUrl)}`;
+                                            break;
+                                    }
+                                }
+                                
+                                const secondSendUrl = proxyUrl + encodeURIComponent(targetUrl);
+                                const secondResponse = await fetch(secondSendUrl);
+                                const secondData = await secondResponse.json();
+                                const secondResultText = secondData.contents;
+                                
+                                console.log('Segunda respuesta:', secondResultText);
+                                
+                                try {
+                                    const secondResult = JSON.parse(secondResultText);
+                                    if (secondResult.status === 'success') {
+                                        success = true;
+                                    } else {
+                                        errorMessage = secondResult.comment || secondResult.msg || errorMessage;
+                                    }
+                                } catch (secondParseError) {
+                                    if (secondResultText.includes('Success!') || secondResultText.includes('success')) {
+                                        success = true;
+                                    }
+                                }
+                            }
                         }
                     } catch (parseError) {
-                        // Si no es JSON, verificar por texto HTML (IGUAL QUE VERSIÓN 31)
+                        // Si no es JSON válido, analizar el contenido HTML/texto
+                        console.log('No es JSON válido, analizando contenido:', resultText.substring(0, 200));
+                        
                         if (resultText.includes('Success!') || resultText.includes('success')) {
                             success = true;
                         } else if (resultText.includes('Failed') || resultText.includes('ERROR')) {
-                            errorMessage = 'Error en el envío (ver consola para detalles)';
+                            errorMessage = 'Error en el envío';
                         } else if (resultText.includes('Invalid APIkey')) {
                             errorMessage = 'API Key inválida';
                         } else if (resultText.includes('You are not member of this group')) {
                             errorMessage = 'No eres miembro de este grupo';
                         } else if (resultText.includes('Delay needed') || resultText.includes('8 sec')) {
                             errorMessage = '8 sec. Delay needed';
+                        } else if (resultText.includes('Recipient format is incorrect')) {
+                            errorMessage = 'Formato de destinatario incorrecto';
+                        } else if (resultText.includes('Oops') || resultText.includes('Error')) {
+                            // Extraer mensaje de error más específico
+                            const errorMatch = resultText.match(/Oops[^<]*|Error[^<]*/i);
+                            errorMessage = errorMatch ? errorMatch[0].substring(0, 100) : 'Error del servidor';
+                        } else if (resultText.includes('<!DOCTYPE') || resultText.includes('<html>')) {
+                            errorMessage = 'Respuesta HTML inesperada del servidor';
                         } else {
-                            // SI NO HAY ERROR CLARO, ASUMIR ÉXITO (IGUAL QUE VERSIÓN 31)
-                            success = true;
+                            // Si no hay error claro pero tampoco éxito, considerar como error
+                            errorMessage = `Respuesta inesperada: ${resultText.substring(0, 50)}...`;
                         }
                     }
                     
@@ -1041,7 +1259,7 @@
                         statusItem.className = 'status-item success';
                         statusItem.innerHTML = `
                             <span>${group.name}</span>
-                            <span>✅ Enviado</span>
+                            <span>✅ Enviado${fileUrl ? ' (con archivo)' : ''}</span>
                         `;
                         sent++;
                         console.log(`✅ Enviado a ${group.name}`);
@@ -1049,9 +1267,15 @@
                         statusItem.className = 'status-item error';
                         statusItem.innerHTML = `
                             <span>${group.name}</span>
-                            <span>❌ Error: ${errorMessage}</span>
+                            <span>❌ ${errorMessage}</span>
                         `;
                         console.error(`❌ Error en ${group.name}: ${errorMessage}`);
+                        
+                        // Agregar a lista de fallos para reenvío posterior
+                        failedGroups.push({
+                            ...group,
+                            error: errorMessage
+                        });
                     }
                     
                 } catch (error) {
@@ -1061,6 +1285,11 @@
                         <span>${group.name}</span>
                         <span>❌ Error: ${error.message}</span>
                     `;
+                    
+                    failedGroups.push({
+                        ...group,
+                        error: error.message
+                    });
                 }
                 
                 // Actualizar progreso
@@ -1071,7 +1300,7 @@
                 
                 // Esperar antes del siguiente envío
                 if (i < selectedGroups.length - 1) {
-                    await new Promise(resolve => setTimeout(resolve, delay));
+                    await new Promise(resolve => setTimeout(resolve, delay * 1000));
                 }
             }
             
@@ -1080,90 +1309,20 @@
             document.getElementById('progress-text').textContent = 
                 `Completado: ${sent}/${total} mensajes enviados`;
             
-            // Mostrar botón de reintentos si hay errores
-            const failedCount = total - sent;
-            if (failedCount > 0) {
-                document.getElementById('retry-btn').classList.remove('hidden');
-                document.getElementById('progress-text').textContent += ` - ${failedCount} errores`;
+            // Mostrar resumen
+            showSendingSummary(sent, failedGroups.length, total);
+            
+            // Mostrar panel de reintento si hay errores
+            if (failedGroups.length > 0) {
+                showRetryPanel();
             }
             
-        // Vista previa móvil
-        function showMobilePreview() {
-            const text = document.getElementById('message-text').value;
-            const type = document.getElementById('message-type').value;
-            const fileUrl = document.getElementById('file-url').value;
-            
-            if (!text) {
-                alert('Escribe un mensaje primero para ver la vista previa');
-                return;
-            }
-            
-            let preview = text.replace('{grupo}', 'BAITEL BT001-EJEMPLO')
-                             .replace('{fecha}', new Date().toLocaleDateString())
-                             .replace('{hora}', new Date().toLocaleTimeString());
-            
-            // Crear modal de vista móvil
-            const modal = document.createElement('div');
-            modal.className = 'mobile-preview-modal';
-            modal.innerHTML = `
-                <button class="close-preview" onclick="this.parentElement.remove()">✕</button>
-                <div class="mobile-phone">
-                    <div class="phone-screen">
-                        <div class="whatsapp-header">
-                            <div class="group-avatar">📱</div>
-                            <div class="group-info">
-                                <h4>BAITEL BT001-EJEMPLO</h4>
-                                <p>Tú, +52 xxx xxx xxxx</p>
-                            </div>
-                        </div>
-                        <div class="chat-area">
-                            <div class="message-bubble">
-                                <div class="message-text">${preview.replace(/\n/g, '<br>')}</div>
-                                ${type !== 'text' && fileUrl ? `
-                                    <div style="margin-top: 8px; padding: 8px; background: rgba(0,0,0,0.1); border-radius: 8px; font-size: 12px;">
-                                        📎 ${getFileTypeIcon(type)} Archivo adjunto
-                                    </div>
-                                ` : ''}
-                                <div class="message-time">
-                                    ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                                    <span class="message-status">✓✓</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Cerrar con ESC o clic fuera
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
-            
-            document.addEventListener('keydown', function handleEscape(e) {
-                if (e.key === 'Escape') {
-                    modal.remove();
-                    document.removeEventListener('keydown', handleEscape);
-                }
-            });
-        }
-        
-        // Función auxiliar para iconos de archivos
-        function getFileTypeIcon(type) {
-            const icons = {
-                'image': '🖼️',
-                'video': '🎬',
-                'audio': '🎵',
-                'document': '📄'
-            };
-            return icons[type] || '📎';
-        }
+            sendingProcess = null;
         }
         
         // Detener envío
         function stopSending() {
-            sendingProcess = false; // Cambiar a false para detener el bucle
+            sendingProcess = false;
             document.getElementById('send-btn').classList.remove('hidden');
             document.getElementById('stop-btn').classList.add('hidden');
             document.getElementById('progress-text').textContent = 'Envío detenido por el usuario';
@@ -1253,176 +1412,231 @@
             statusList.insertAdjacentHTML('afterbegin', summaryHtml);
         }
         
-        // Reintentar solo grupos con errores
-        function retryFailedGroups() {
-            const errorItems = document.querySelectorAll('.status-item.error');
-            if (errorItems.length === 0) {
-                alert('No hay grupos con errores para reintentar');
+        // FUNCIÓN ORIGINAL MEJORADA: Agregar grupo como en el sistema original
+        async function addGroupOriginalMethod() {
+            const invitationCode = document.getElementById('invitation-code-original').value.trim();
+            const apikey = document.getElementById('apikey').value;
+            
+            if (!invitationCode) {
+                showAlert('add-group-status-original', 'danger', '❌ Por favor ingresa el código de invitación');
                 return;
             }
             
-            const failedGroupNames = Array.from(errorItems).map(item => 
-                item.querySelector('span').textContent
-            );
-            
-            const failedGroups = groups.filter(g => 
-                g.selected && failedGroupNames.includes(g.name)
-            );
-            
-            if (confirm(`¿Reintentar envío solo a los ${failedGroups.length} grupos con errores?\n\nEsto evitará envíos duplicados a los grupos exitosos.`)) {
-                // Limpiar solo los elementos de error para el reintento
-                errorItems.forEach(item => item.remove());
-                
-                // Ocultar filtros temporalmente
-                document.getElementById('status-filters').classList.add('hidden');
-                document.getElementById('retry-btn').classList.add('hidden');
-                
-                // Iniciar envío solo para grupos con errores
-                startSendingForSpecificGroups(failedGroups);
+            if (!apikey) {
+                showAlert('add-group-status-original', 'danger', '❌ Por favor configura tu API Key primero');
+                return;
             }
-        }
-        
-        // Envío específico para grupos seleccionados (reintentos)
-        async function startSendingForSpecificGroups(targetGroups) {
-            const apikey = document.getElementById('apikey').value;
-            const text = document.getElementById('message-text').value;
-            const delay = parseInt(document.getElementById('delay').value) * 1000;
             
-            document.getElementById('send-btn').classList.add('hidden');
-            document.getElementById('stop-btn').classList.remove('hidden');
-            
-            const statusList = document.getElementById('status-list');
-            let sent = 0;
-            const total = targetGroups.length;
-            sendingProcess = true;
-            
-            // Actualizar progreso para reintentos
-            document.getElementById('progress-text').textContent = `Reintentando errores: 0/${total}`;
-            
-            for (let i = 0; i < targetGroups.length; i++) {
-                if (!sendingProcess) {
-                    document.getElementById('progress-text').textContent = 
-                        `Reintento detenido: ${sent}/${total} grupos procesados`;
-                    break;
-                }
+            try {
+                showAlert('add-group-status-original', 'warning', '🔍 Obteniendo información del grupo...');
                 
-                const group = targetGroups[i];
-                const statusItem = document.createElement('div');
-                statusItem.className = 'status-item pending';
-                statusItem.innerHTML = `
-                    <span>${group.name}</span>
-                    <span>🔄 Reintentando...</span>
-                `;
-                statusList.appendChild(statusItem);
+                // Usar el mismo método que el sistema original
+                const proxyUrl = 'https://api.allorigins.win/get?url=';
+                const targetUrl = `http://api.textmebot.com/send.php?apikey=${encodeURIComponent(apikey)}&group_info=${encodeURIComponent(invitationCode)}&json=yes`;
+                const requestUrl = proxyUrl + encodeURIComponent(targetUrl);
                 
-                // Usar la misma lógica de envío que el proceso principal
+                console.log('Consultando grupo con URL:', targetUrl);
+                
+                const response = await fetch(requestUrl);
+                const data = await response.json();
+                const resultText = data.contents;
+                
+                console.log('Respuesta de group_info:', resultText);
+                
                 try {
-                    const messageText = text.replace('{grupo}', group.name)
-                                          .replace('{fecha}', new Date().toLocaleDateString())
-                                          .replace('{hora}', new Date().toLocaleTimeString());
+                    const result = JSON.parse(resultText);
                     
-                    console.log(`Reintentando envío a: ${group.name}`);
-                    
-                    // USAR LA MISMA LÓGICA DE ENVÍO QUE LA VERSIÓN 31
-                    const proxyUrl = 'https://api.allorigins.win/get?url=';
-                    let targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(group.id)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
-                    
-                    const sendUrl = proxyUrl + encodeURIComponent(targetUrl);
-                    
-                    let success = false;
-                    let errorMessage = 'Error desconocido';
-                    
-                    try {
-                        const response = await fetch(sendUrl, { method: 'GET' });
+                    if (result.status === 'success' || result.group_id) {
+                        const group = {
+                            id: result.group_id || `${invitationCode}@g.us`,
+                            name: result.subject || result.group_name || `Grupo ${invitationCode}`,
+                            invitationCode: invitationCode,
+                            selected: true,
+                            auto: true,
+                            dateAdded: new Date().toISOString()
+                        };
                         
-                        if (!response.ok) {
-                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        // Verificar duplicados
+                        const existingGroup = groups.find(g => g.invitationCode === invitationCode);
+                        if (existingGroup) {
+                            showAlert('add-group-status-original', 'warning', `⚠️ El grupo "${existingGroup.name}" ya está agregado`);
+                            return;
                         }
                         
-                        const data = await response.json();
-                        const resultText = data.contents;
+                        groups.push(group);
+                        renderGroups();
+                        document.getElementById('invitation-code-original').value = '';
+                        saveConfig();
                         
-                        console.log(`Respuesta reintento ${group.name}:`, resultText);
+                        showAlert('add-group-status-original', 'success', `✅ Grupo "${group.name}" agregado exitosamente\n🆔 ID: ${group.id}`);
                         
-                        try {
-                            const result = JSON.parse(resultText);
-                            if (result.status === 'success') {
-                                success = true;
-                            } else {
-                                errorMessage = result.comment || result.msg || 'Error en el envío';
-                            }
-                        } catch (parseError) {
-                            if (resultText.includes('Success!') || resultText.includes('success')) {
-                                success = true;
-                            } else if (resultText.includes('Failed') || resultText.includes('ERROR')) {
-                                errorMessage = 'Error en el envío';
-                            } else if (resultText.includes('Invalid APIkey')) {
-                                errorMessage = 'API Key inválida';
-                            } else if (resultText.includes('You are not member')) {
-                                errorMessage = 'No eres miembro del grupo';
-                            } else if (resultText.includes('Delay needed')) {
-                                errorMessage = '8 sec. Delay needed';
-                            } else {
-                                success = true;
-                            }
-                        }
-                        
-                    } catch (fetchError) {
-                        errorMessage = `Error de conexión: ${fetchError.message}`;
-                    }
-                    
-                    if (success) {
-                        statusItem.className = 'status-item success';
-                        statusItem.innerHTML = `
-                            <span>${group.name}</span>
-                            <span>✅ Reintento exitoso</span>
-                        `;
-                        sent++;
                     } else {
-                        statusItem.className = 'status-item error';
-                        statusItem.innerHTML = `
-                            <span>${group.name}</span>
-                            <span>❌ ${errorMessage}</span>
-                        `;
+                        // Si la API no devuelve información válida, intentar método manual
+                        throw new Error(result.msg || result.comment || 'No se pudo obtener información del grupo');
+                    }
+                } catch (parseError) {
+                    console.log('No se pudo parsear como JSON, intentando método manual');
+                    
+                    // Verificar si la respuesta contiene información de error específica
+                    if (resultText.includes('Invalid APIkey')) {
+                        showAlert('add-group-status-original', 'danger', '❌ API Key inválida');
+                        return;
+                    } else if (resultText.includes('Invalid group') || resultText.includes('not found')) {
+                        showAlert('add-group-status-original', 'danger', '❌ Código de invitación inválido o grupo no encontrado');
+                        return;
                     }
                     
-                } catch (error) {
-                    statusItem.className = 'status-item error';
-                    statusItem.innerHTML = `
-                        <span>${group.name}</span>
-                        <span>❌ Error: ${error.message}</span>
-                    `;
+                    // Método de fallback: agregar manualmente
+                    const groupName = prompt('No se pudo obtener el nombre automáticamente. ¿Cuál es el nombre del grupo?', `Grupo ${invitationCode.substring(0, 8)}`);
+                    if (groupName) {
+                        addGroupManuallyOriginal(invitationCode, groupName);
+                    }
                 }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('add-group-status-original', 'danger', `❌ Error de conexión: ${error.message}`);
                 
-                // Actualizar progreso
-                const progress = ((i + 1) / total) * 100;
-                document.getElementById('progress-fill').style.width = progress + '%';
-                document.getElementById('progress-text').textContent = 
-                    `Reintentando: ${i + 1}/${total} (${sent} exitosos)`;
-                
-                // Esperar antes del siguiente envío
-                if (i < targetGroups.length - 1) {
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
+                // Ofrecer método manual como alternativa
+                setTimeout(() => {
+                    showAlert('add-group-status-original', 'warning', '💡 Usa el método manual abajo si el automático falla');
+                }, 3000);
             }
-            
-            // Finalizar reintento
-            document.getElementById('send-btn').classList.remove('hidden');
-            document.getElementById('stop-btn').classList.add('hidden');
-            document.getElementById('progress-text').textContent = 
-                `Reintento completado: ${sent}/${total} exitosos`;
-            
-            // Mostrar filtros si aún hay errores
-            const remainingErrors = total - sent;
-            if (remainingErrors > 0) {
-                document.getElementById('retry-btn').classList.remove('hidden');
-                document.getElementById('status-filters').classList.remove('hidden');
-            }
-            
-            sendingProcess = null;
         }
         
-        // Cargar desde archivo
+        // FUNCIÓN AUXILIAR: Agregar grupo manualmente desde método original
+        function addGroupManuallyOriginal(invitationCode, groupName) {
+            // Verificar duplicados
+            const existingGroup = groups.find(g => g.invitationCode === invitationCode);
+            if (existingGroup) {
+                showAlert('add-group-status-original', 'warning', `⚠️ El grupo "${existingGroup.name}" ya está agregado`);
+                return;
+            }
+            
+            const group = {
+                id: `${invitationCode}@g.us`,
+                name: groupName,
+                invitationCode: invitationCode,
+                selected: true,
+                manual: true,
+                dateAdded: new Date().toISOString()
+            };
+            
+            groups.push(group);
+            renderGroups();
+            document.getElementById('invitation-code-original').value = '';
+            saveConfig();
+            
+            showAlert('add-group-status-original', 'success', `✅ Grupo "${groupName}" agregado manualmente\n🆔 ID: ${group.id}`);
+        }
+        async function testSingleGroup() {
+            if (groups.length === 0) {
+                alert('No hay grupos para probar. Agrega un grupo primero.');
+                return;
+            }
+            
+            const lastGroup = groups[groups.length - 1];
+            const apikey = document.getElementById('apikey').value;
+            
+            if (!apikey) {
+                alert('Configura tu API Key primero');
+                return;
+            }
+            
+            const confirmed = confirm(`¿Probar envío al grupo "${lastGroup.name}"?\n\nID: ${lastGroup.id}\nCódigo: ${lastGroup.invitationCode}\n\nEsto enviará un mensaje de prueba.`);
+            
+            if (!confirmed) {
+                return;
+            }
+            
+            try {
+                showAlert('add-group-status', 'warning', '🧪 Probando grupo...');
+                
+                const testMessage = `🧪 Prueba de conexión - ${new Date().toLocaleTimeString()}`;
+                
+                // Usar el código de invitación como recipient
+                let recipientId = lastGroup.manual && lastGroup.invitationCode ? lastGroup.invitationCode : lastGroup.id;
+                
+                const proxyUrl = 'https://api.allorigins.win/get?url=';
+                const targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(recipientId)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(testMessage)}&json=yes`;
+                const sendUrl = proxyUrl + encodeURIComponent(targetUrl);
+                
+                console.log('URL de prueba:', targetUrl);
+                
+                const response = await fetch(sendUrl);
+                const data = await response.json();
+                const resultText = data.contents;
+                
+                console.log('Respuesta de prueba:', resultText);
+                
+                let success = false;
+                let errorMessage = 'Error desconocido';
+                
+                try {
+                    const result = JSON.parse(resultText);
+                    if (result.status === 'success') {
+                        success = true;
+                    } else {
+                        errorMessage = result.comment || result.msg || 'Error en el envío';
+                    }
+                } catch (parseError) {
+                    if (resultText.includes('Success!') || resultText.includes('success')) {
+                        success = true;
+                    } else if (resultText.includes('Oops') || resultText.includes('Error')) {
+                        const errorMatch = resultText.match(/Oops[^<]*|Error[^<]*/i);
+                        errorMessage = errorMatch ? errorMatch[0].substring(0, 100) : 'Error del servidor';
+                    } else if (resultText.includes('Invalid APIkey')) {
+                        errorMessage = 'API Key inválida';
+                    } else if (resultText.includes('You are not member')) {
+                        errorMessage = 'No eres miembro de este grupo';
+                    } else if (resultText.includes('<!DOCTYPE') || resultText.includes('<html>')) {
+                        errorMessage = 'El servidor devolvió HTML en lugar de JSON';
+                    } else {
+                        errorMessage = `Respuesta inesperada: ${resultText.substring(0, 50)}...`;
+                    }
+                }
+                
+                if (success) {
+                    showAlert('add-group-status', 'success', `✅ Prueba exitosa al grupo "${lastGroup.name}"\n\nEl grupo está configurado correctamente.`);
+                } else {
+                    showAlert('add-group-status', 'danger', `❌ Error en prueba: ${errorMessage}\n\nRevisa la configuración del grupo.`);
+                }
+                
+            } catch (error) {
+                showAlert('add-group-status', 'danger', `❌ Error de conexión: ${error.message}`);
+            }
+            
+            // Limpiar mensaje después de 10 segundos
+            setTimeout(() => {
+                document.getElementById('add-group-status').innerHTML = '';
+            }, 10000);
+        }
+        function exportGroupsOnly() {
+            if (groups.length === 0) {
+                alert('No hay grupos para exportar');
+                return;
+            }
+            
+            const groupsData = {
+                groups: groups,
+                totalGroups: groups.length,
+                selectedGroups: groups.filter(g => g.selected).length,
+                exportDate: new Date().toISOString(),
+                exportType: 'groups-only',
+                version: '2.1-mejorada'
+            };
+            
+            const blob = new Blob([JSON.stringify(groupsData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `whatsapp-grupos-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert(`✅ Exportados ${groups.length} grupos exitosamente\n\nArchivo: whatsapp-grupos-${new Date().toISOString().split('T')[0]}.json`);
+        }
+        
+        // FUNCIÓN MEJORADA: Cargar desde archivo (ahora detecta si son solo grupos)
         function loadFromFile() {
             const input = document.createElement('input');
             input.type = 'file';
@@ -1436,14 +1650,52 @@
                             let data;
                             if (file.name.endsWith('.json')) {
                                 data = JSON.parse(event.target.result);
-                                if (Array.isArray(data)) {
-                                    groups = data;
-                                } else if (data.groups) {
+                                
+                                // Detectar si es archivo de solo grupos o configuración completa
+                                if (data.exportType === 'groups-only' && data.groups) {
+                                    // Confirmar antes de reemplazar grupos existentes
+                                    if (groups.length > 0) {
+                                        const replace = confirm(`¿Reemplazar los ${groups.length} grupos actuales con los ${data.groups.length} grupos del archivo?\n\n✅ Se mantendrán todos los datos de grupos\n⚠️ Se perderán los grupos actuales`);
+                                        if (!replace) {
+                                            return;
+                                        }
+                                    }
+                                    
                                     groups = data.groups;
+                                    renderGroups();
+                                    saveConfig();
+                                    alert(`✅ Cargados ${data.groups.length} grupos exitosamente\n\nFecha de exportación: ${new Date(data.exportDate).toLocaleString()}`);
+                                    
+                                } else if (Array.isArray(data)) {
+                                    // Formato legacy de array de grupos
+                                    groups = data;
+                                    renderGroups();
+                                    saveConfig();
+                                    alert(`✅ Cargados ${data.length} grupos (formato legacy)`);
+                                    
+                                } else if (data.groups) {
+                                    // Configuración completa
+                                    const loadComplete = confirm(`El archivo contiene configuración completa (grupos + mensajes + configuración).\n\n¿Cargar solo los grupos o toda la configuración?\n\n✅ OK = Solo grupos\n❌ Cancelar = Toda la configuración`);
+                                    
+                                    if (loadComplete) {
+                                        groups = data.groups;
+                                        renderGroups();
+                                        saveConfig();
+                                        alert(`✅ Cargados solo ${data.groups.length} grupos de la configuración completa`);
+                                    } else {
+                                        // Cargar configuración completa
+                                        groups = data.groups || [];
+                                        document.getElementById('message-text').value = data.messageText || '';
+                                        document.getElementById('message-type').value = data.messageType || 'text';
+                                        document.getElementById('file-url').value = data.fileUrl || '';
+                                        document.getElementById('delay').value = data.delay || 8;
+                                        
+                                        renderGroups();
+                                        toggleMessageType();
+                                        saveConfig();
+                                        alert(`✅ Configuración completa cargada\n\nGrupos: ${groups.length}\nMensaje: ${data.messageText ? 'Cargado' : 'Vacío'}`);
+                                    }
                                 }
-                                renderGroups();
-                                saveConfig();
-                                alert('Grupos cargados exitosamente');
                             }
                         } catch (error) {
                             alert('Error al cargar el archivo: ' + error.message);
@@ -1463,11 +1715,18 @@
                 return;
             }
             
-            const blob = new Blob([text], { type: 'text/plain' });
+            const template = {
+                text: text,
+                messageType: document.getElementById('message-type').value,
+                fileUrl: document.getElementById('file-url').value,
+                createdDate: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(template, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'plantilla-mensaje.txt';
+            a.download = 'plantilla-mensaje-whatsapp.json';
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -1480,14 +1739,16 @@
                 messageType: document.getElementById('message-type').value,
                 fileUrl: document.getElementById('file-url').value,
                 delay: document.getElementById('delay').value,
-                exportDate: new Date().toISOString()
+                lastSendingConfig: lastSendingConfig,
+                exportDate: new Date().toISOString(),
+                version: '2.1-mejorada'
             };
             
             const blob = new Blob([JSON.stringify(config, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'whatsapp-bulk-config.json';
+            a.download = 'whatsapp-bulk-config-mejorado.json';
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -1495,39 +1756,49 @@
         // Mostrar ayuda
         function showHelp() {
             alert(`
-📖 Guía de Uso - Versión 2.0 WhatsApp Edition
+📖 Guía de Uso - Versión 2.1 MEJORADA
 
-🆕 NUEVAS CARACTERÍSTICAS:
-• ✅ Pestañas completamente funcionales
-• 🔤 Ordenamiento automático A-Z/Z-A
-• 🔍 Búsqueda mejorada en tiempo real
-• 💾 Auto-guardado cada 30 segundos
-• 🎨 Tema WhatsApp (verde)
+🆕 MEJORAS EN ESTA VERSIÓN:
+• 🔍 Mejor detección de códigos de invitación
+• 📎 Reenvío CON archivos adjuntos incluidos
+• ✅ Validación mejorada para evitar duplicados
+• 📊 Mejor seguimiento de errores y reintentos
 
 1️⃣ Configuración:
 • Obtén tu API Key en textmebot.com
 • Ingresa tu API Key y verifica la conexión
 
-2️⃣ Agregar Grupos:
-• Copia el código del enlace de invitación
-• Ejemplo: https://chat.whatsapp.com/RTiy3mHqIDfD22H1InRR5E
-• Solo usa la parte después de la última "/"
-• Los grupos se ordenan automáticamente por nombre
+2️⃣ Agregar Grupos (MEJORADO):
+• Pega el enlace completo: https://chat.whatsapp.com/CODIGO
+• O solo el código: RTiy3mHqIDfD22H1InRR5E
+• Ingresa el nombre del grupo
+• El sistema valida duplicados automáticamente
 
 3️⃣ Crear Mensaje:
 • Escribe tu mensaje con variables: {grupo}, {fecha}, {hora}
+• Selecciona tipo de archivo si necesitas adjuntar
+• Vista previa muestra archivos adjuntos
 
-4️⃣ Enviar:
-• Selecciona grupos y revisa el resumen
+4️⃣ Enviar (MEJORADO):
+• Revisa el resumen (incluye info de archivos)
+• 🔄 El reenvío a grupos con errores INCLUYE archivos
+• Filtros para ver solo éxitos/errores
 • ⚠️ IMPORTANTE: Debes ser miembro de todos los grupos
+
+🆕 FUNCIÓN CLAVE: REENVÍO CON ARCHIVOS
+• Después del envío, si hay errores aparecerá panel amarillo
+• Click "Reintentar Solo Errores (CON ARCHIVOS)"
+• El sistema reenviará TODO: texto + archivos
 
 🛠️ Consejos:
 • Usa retraso de 8-10 segundos entre envíos
-• Prueba con pocos grupos primero
-• Usa el botón A-Z para cambiar orden
-• Busca grupos por nombre para encontrarlos rápido
+• Los archivos deben ser URLs públicas
+• El reenvío ahora incluye archivos adjuntos
+• Valida que no hay duplicados antes de agregar
 
-🎨 Esta es la Versión 2.0 con tema WhatsApp
+🎨 Esta es la Versión 2.1 MEJORADA
+✅ Soluciona problemas de detección de grupos
+✅ Soluciona problemas de reenvío sin archivos
             `);
         }
         
@@ -1546,14 +1817,16 @@
                 messageText: document.getElementById('message-text').value,
                 messageType: document.getElementById('message-type').value,
                 fileUrl: document.getElementById('file-url').value,
-                sortDirection: sortDirection
+                sortDirection: sortDirection,
+                lastSendingConfig: lastSendingConfig,
+                lastSaved: new Date().toISOString()
             };
-            localStorage.setItem('whatsapp-bulk-config', JSON.stringify(config));
+            localStorage.setItem('whatsapp-bulk-config-mejorado', JSON.stringify(config));
         }
         
         // Cargar configuración
         function loadConfig() {
-            const saved = localStorage.getItem('whatsapp-bulk-config');
+            const saved = localStorage.getItem('whatsapp-bulk-config-mejorado');
             if (saved) {
                 try {
                     const config = JSON.parse(saved);
@@ -1564,6 +1837,7 @@
                     document.getElementById('message-type').value = config.messageType || 'text';
                     document.getElementById('file-url').value = config.fileUrl || '';
                     sortDirection = config.sortDirection || 'asc';
+                    lastSendingConfig = config.lastSendingConfig || null;
                     
                     renderGroups();
                     toggleMessageType();
