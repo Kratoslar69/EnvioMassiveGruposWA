@@ -370,7 +370,6 @@
                 <div class="tab" data-tab="send">📤 Enviar</div>
             </div>
             
-            <!-- CONFIGURACIÓN -->
             <div id="config-tab" class="tab-content">
                 <h3>Configuración de API</h3>
                 <div class="form-group">
@@ -389,11 +388,9 @@
                 <div id="connection-status"></div>
             </div>
             
-            <!-- GESTIÓN DE GRUPOS -->
             <div id="groups-tab" class="tab-content hidden">
                 <h3>Gestión de Grupos</h3>
                 
-                <!-- Panel mejorado para agregar grupos -->
                 <div class="enhanced-panel">
                     <h4>🔍 Agregar Grupo - Método Original Mejorado</h4>
                     <div class="form-group">
@@ -444,8 +441,7 @@
                     </div>
                     
                     <div id="groups-container" style="max-height: 400px; overflow-y: auto; border: 1px solid #e9ecef; border-radius: 8px; background: white;">
-                        <!-- Los grupos se cargarán aquí dinámicamente -->
-                    </div>
+                        </div>
                     
                     <div class="status-panel">
                         <h4>Grupos Configurados: <span id="groups-count">0</span></h4>
@@ -454,7 +450,6 @@
                 </div>
             </div>
             
-            <!-- MENSAJE -->
             <div id="message-tab" class="tab-content hidden">
                 <h3>Configurar Mensaje</h3>
                 
@@ -466,6 +461,7 @@
                         <option value="document">📄 Texto + Documento</option>
                         <option value="audio">🎵 Audio</option>
                         <option value="video">🎬 Video</option>
+                        <option value="link">🔗 Enlace con Vista Previa</option>
                     </select>
                 </div>
                 
@@ -480,6 +476,12 @@
                     <input type="url" id="file-url" class="form-control" placeholder="https://ejemplo.com/archivo.jpg">
                     <small style="color: #6c757d;">El archivo debe estar disponible públicamente en internet</small>
                 </div>
+
+                <div id="link-section" class="form-group hidden">
+                    <label for="link-url">URL del Enlace con Vista Previa:</label>
+                    <input type="url" id="link-url" class="form-control" placeholder="https://ejemplo.com/articulo">
+                    <small style="color: #6c757d;">La URL debe ser pública para generar la vista previa</small>
+                </div>
                 
                 <button class="btn btn-primary" onclick="previewMessage()">👁️ Vista Previa</button>
                 <button class="btn btn-secondary" onclick="saveTemplate()">💾 Guardar Plantilla</button>
@@ -490,7 +492,6 @@
                 </div>
             </div>
             
-            <!-- ENVÍO -->
             <div id="send-tab" class="tab-content hidden">
                 <h3>Envío Masivo</h3>
                 
@@ -499,7 +500,6 @@
                     TextMeBot puede banear tu número si intentas enviar a grupos donde no perteneces.
                 </div>
                 
-                <!-- Panel de reenvío mejorado -->
                 <div id="retry-panel" class="retry-panel hidden">
                     <h4>🔄 Reenvío de Mensajes con Errores MEJORADO</h4>
                     <div>
@@ -529,7 +529,6 @@
                     <button class="btn btn-danger hidden" id="stop-btn" onclick="stopSending()">⏹️ Detener Envío</button>
                 </div>
                 
-                <!-- Filtros de estado -->
                 <div id="status-filters" class="hidden" style="margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
                     <strong>Filtrar por estado:</strong>
                     <div style="margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
@@ -1011,10 +1010,16 @@
         function toggleMessageType() {
             const type = document.getElementById('message-type').value;
             const fileSection = document.getElementById('file-section');
+            const linkSection = document.getElementById('link-section'); // Seleccionamos la nueva sección de enlace
+
+            // Ocultamos ambas secciones por defecto
+            fileSection.classList.add('hidden');
+            linkSection.classList.add('hidden');
             
-            if (type === 'text') {
-                fileSection.classList.add('hidden');
-            } else {
+            // Mostramos la sección que corresponda al tipo de mensaje
+            if (type === 'link') {
+                linkSection.classList.remove('hidden');
+            } else if (type !== 'text') {
                 fileSection.classList.remove('hidden');
             }
         }
@@ -1024,6 +1029,7 @@
             const text = document.getElementById('message-text').value;
             const type = document.getElementById('message-type').value;
             const fileUrl = document.getElementById('file-url').value;
+            const linkUrl = document.getElementById('link-url').value; // Obtenemos la URL del enlace
             
             let preview = text.replace('{grupo}', 'Grupo de Ejemplo')
                              .replace('{fecha}', new Date().toLocaleDateString())
@@ -1033,7 +1039,11 @@
             content += `<strong>Tipo:</strong> ${type}<br>`;
             content += `<strong>Texto:</strong><br>${preview.replace(/\n/g, '<br>')}`;
             
-            if (type !== 'text' && fileUrl) {
+            // Modificamos la lógica para la vista previa del enlace
+            if (type === 'link' && linkUrl) {
+                content += `<br><br><strong>Enlace con Vista Previa:</strong><br>`;
+                content += `<a href="${linkUrl}" target="_blank" style="color: #25d366;">${linkUrl}</a>`;
+            } else if (type !== 'text' && fileUrl) {
                 content += `<br><br><strong>Archivo adjunto:</strong><br>`;
                 content += `<a href="${fileUrl}" target="_blank" style="color: #25d366;">${fileUrl}</a>`;
             }
@@ -1049,14 +1059,19 @@
             const messageType = document.getElementById('message-type').value;
             const delay = document.getElementById('delay').value;
             const fileUrl = document.getElementById('file-url').value;
+            const linkUrl = document.getElementById('link-url').value; // Obtenemos la URL del enlace
             
             document.getElementById('selected-groups-count').textContent = selectedCount;
             document.getElementById('message-type-summary').textContent = messageType;
             document.getElementById('delay-summary').textContent = delay;
             
-            // Mostrar información del archivo en el resumen
+            // Mostrar información del archivo/enlace en el resumen
             const fileSummary = document.getElementById('file-summary');
-            if (messageType !== 'text' && fileUrl) {
+            if (messageType === 'link' && linkUrl) {
+                const linkName = linkUrl.split('/').pop();
+                fileSummary.textContent = linkName;
+                fileSummary.style.color = '#25d366';
+            } else if (messageType !== 'text' && fileUrl) {
                 const fileName = fileUrl.split('/').pop();
                 fileSummary.textContent = fileName;
                 fileSummary.style.color = '#25d366';
@@ -1079,6 +1094,7 @@
             const delay = parseInt(document.getElementById('delay').value);
             const messageType = document.getElementById('message-type').value;
             const fileUrl = document.getElementById('file-url').value;
+            const linkUrl = document.getElementById('link-url').value; // Obtenemos la URL del enlace
             
             if (!apikey || !text) {
                 alert('Completa la configuración y el mensaje');
@@ -1092,6 +1108,7 @@
                 delay: delay,
                 messageType: messageType,
                 fileUrl: fileUrl,
+                linkUrl: linkUrl, // Guardamos la URL del enlace
                 timestamp: new Date().toISOString()
             };
             
@@ -1121,7 +1138,7 @@
                 statusItem.className = 'status-item pending';
                 statusItem.innerHTML = `
                     <span>${group.name}</span>
-                    <span>Enviando${fileUrl ? ' (con archivo)' : ''}...</span>
+                    <span>Enviando${fileUrl || linkUrl ? ' (con adjunto)' : ''}...</span>
                 `;
                 statusList.appendChild(statusItem);
                 
@@ -1144,8 +1161,11 @@
                     const proxyUrl = 'https://api.allorigins.win/get?url=';
                     let targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(recipientId)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
                     
-                    // Agregar archivos según el tipo
-                    if (messageType !== 'text' && fileUrl) {
+                    // NUEVA LÓGICA: AGREGAR EL PARÁMETRO 'link' PARA ENLACES
+                    if (messageType === 'link' && linkUrl) {
+                        const cleanLinkUrl = linkUrl.trim();
+                        targetUrl += `&link=${encodeURIComponent(cleanLinkUrl)}`;
+                    } else if (messageType !== 'text' && fileUrl) {
                         const cleanFileUrl = fileUrl.trim();
                         
                         switch (messageType) {
@@ -1190,7 +1210,10 @@
                                 recipientId = group.id;
                                 targetUrl = `http://api.textmebot.com/send.php?recipient=${encodeURIComponent(recipientId)}&apikey=${encodeURIComponent(apikey)}&text=${encodeURIComponent(messageText)}&json=yes`;
                                 
-                                if (messageType !== 'text' && fileUrl) {
+                                // Volvemos a agregar el adjunto para el segundo intento
+                                if (messageType === 'link' && linkUrl) {
+                                    targetUrl += `&link=${encodeURIComponent(linkUrl.trim())}`;
+                                } else if (messageType !== 'text' && fileUrl) {
                                     const cleanFileUrl = fileUrl.trim();
                                     switch (messageType) {
                                         case 'image':
@@ -1259,7 +1282,7 @@
                         statusItem.className = 'status-item success';
                         statusItem.innerHTML = `
                             <span>${group.name}</span>
-                            <span>✅ Enviado${fileUrl ? ' (con archivo)' : ''}</span>
+                            <span>✅ Enviado${fileUrl ? ' (con archivo)' : linkUrl ? ' (con enlace)' : ''}</span>
                         `;
                         sent++;
                         console.log(`✅ Enviado a ${group.name}`);
@@ -1817,6 +1840,7 @@
                 messageText: document.getElementById('message-text').value,
                 messageType: document.getElementById('message-type').value,
                 fileUrl: document.getElementById('file-url').value,
+                linkUrl: document.getElementById('link-url').value, // Guardamos la URL del enlace
                 sortDirection: sortDirection,
                 lastSendingConfig: lastSendingConfig,
                 lastSaved: new Date().toISOString()
@@ -1836,6 +1860,7 @@
                     document.getElementById('message-text').value = config.messageText || '';
                     document.getElementById('message-type').value = config.messageType || 'text';
                     document.getElementById('file-url').value = config.fileUrl || '';
+                    document.getElementById('link-url').value = config.linkUrl || ''; // Cargamos la URL del enlace
                     sortDirection = config.sortDirection || 'asc';
                     lastSendingConfig = config.lastSendingConfig || null;
                     
